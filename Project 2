@@ -1,0 +1,269 @@
+"""
+project_1.py
+Shreya Nidta 
+Yupheng Ormonde-Thao
+Jeremy Burt
+
+little game abt a deck of cards :)
+
+"""
+import sys
+stars = 5
+def print_health(health: int): #defines a function named print_health with arguments "health"  
+    global stars # stars is a global variable, but global variables can't be accessed in a function the keyword global is used
+    print("[",end="")
+    # print stars for each life the player still has
+    for y in range(health): 
+        print(" ✮ ",end = "")
+    # Put spaces for the "lives" player has lost.
+    if (5 - health) > 0:
+        for _ in range(5-health):
+            print(" ",end = "")
+    print("]")
+    if stars <= 0:
+        print("YOU FAILED, goodbye")
+        sys.exit(0)
+
+# asks for user's name and welcomes them 
+print("Enter your name:")
+name = input()
+print(f"Welcome, {name}, would you like to enter the realm of cards?\n[1] yes [2] no.")
+
+while True:
+    # Creates an infinite loop that asks a user to select a choice until they select 1
+    user_input1 = "" 
+    while True:  #makes sure the player only types a number in 
+        try:
+            user_input1 = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    if user_input1 == 1:
+        break # exits loop
+    elif user_input1 == 2:
+        print("Try again.")
+
+# this section explains what happens and tells the user about the 'lives' they have and what happens when they run out.
+print("· · ─ ·✶· ─ · · Congratulations! You’ve entered the realm of the deck of cards. · · ─ ·✶· ─ · ·")
+print("It’s been a chaotic past few years, the suits are missing some of their members.")
+print("You start with 5 stars, and you can lose some and gain some. Watch out, if you lose all five you fail.")
+print_health(stars)
+print("Your help is needed, are you willing?")
+print("[1] yes [2] no.")
+
+# creates an infinite loop that asks the user to help
+while True: 
+    user_input2 = "" 
+    while True:  #makes sure the player only types a number in 
+        try:
+            user_input2 = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+    if user_input2 == 1:
+        break
+
+    elif user_input2 == 2:
+        print("How rude. Try again.")
+
+# this section introduces the main goal of the game and the first hallway 
+print("Your help is much appreciated.")
+print("The goal is to find all the missing members of each suit. You ascend the spiral red staircase and end up in front of a hallway.")
+print("There are thirteen doors with heart emblems. One of these doors are marked with a sparkly red X. Do you wish to continue forward?")
+print("[1] yes [2] no")
+
+# This section is the start of the questions and first door
+user_input4 = "" 
+while True:  #makes sure the player only types a number in 
+    try:
+        user_input4 = int(input())
+        break
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+if user_input4 == 1:  # user chose yes and is introduced to the jokers
+    print("You continue forward towards the doors.")
+    print("As you walk, the Orange Joker appears out from a burst of orange glitter.")
+    print("'Hello young traveler! You must be here to find the missing card in this suit! Unluckily for you, I have kidnapped them! Bahahahaha! I have a joke for you.'")
+    print("'Why did the king go to the doctor? Because he was feeling a little flushed!'") 
+    print("'He's also feeling scared as his fate rests in your hands.'")
+
+    # the Orange Joker runs away and the Green Joker explains the first challenge 
+    print("The Orange Joker runs away, and the Green Joker appears out of thin air.\n'My friend, in order to escape you must finish all of the challenges ahead, starting off by freeing the King of Hearts\nwho is locked behind his door. To free him you must answer a question.'")
+    print("'How many planets are there?(including pluto)'")
+    # a correct answer gives the player a star and sets the King of Hearts free
+    user_input5 = "" 
+    while True:  #makes sure the player only types a number in 
+        try:
+            user_input5 = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+    if user_input5 == 9:
+        print("Congrats! You passed!")
+        print("You manage to answer the question and set the King of Hearts free. He is reunited with the rest of his suit.") 
+        print("Hooray! Everyone thanks you and throws a banquet in your honor.")
+        stars += 1
+        print_health(stars)
+
+    else: # an incorrect answer costs the player one star but the king is still freed
+        print("Incorrect. You lose a star.")
+        print("Even though you failed to answer the question, the Green Joker somehow sets the King of Hearts free.")
+        print("He is reunited with the rest of his suit, no thanks to you.") 
+        stars -= 1
+        print_health(stars)
+
+# if the player picks no they lose a star but are still forced to continue forward 
+elif user_input4 == 2:
+    print("You must continue forward regardless. A point is taken off for your lack of bravery.")
+    stars -= 1
+    print_health(stars)
+
+    # Jokers appear and explain the challenge 
+    print("The Orange Joker appears out of nowhere from a burst of orange glitter.")
+    print("'Hello young traveler! You must be here to find the missing card in this suit!'")
+    print("'Unluckily for you, I have kidnapped them! Bahahahaha! I have a joke for you.'")
+    print("'Why did the king go to the doctor? Because he was feeling a little flushed!'") 
+    print("'He's also feeling scared as his fate rests in your hands.'")
+    print("The Orange Joker runs away, and the Green Joker appears out of thin air")
+    print("My friend, in order to escape you must finish all of the challenges ahead\nstarting off by freeing the King of Hearts who is locked behind his door.\nTo free him you must answer a question.'")
+    print("'How many planets are there (including pluto)?'")
+
+    user_input8 = "" 
+    while True:  #makes sure the player only types a number in 
+        try:
+            user_input8 = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+    if user_input8 == 9: # a correct answer gives the player a star and sets the King of Hearts free
+        print("Congrats! You passed!")
+        print("You manage to answer the question and set the King of Hearts free. He is reunited with the rest of his suit.") 
+        print("Hooray! Everyone thanks you and throws a banquet in your honor.")
+        stars += 1
+        print_health(stars)
+        
+    else: # an incorrect answer costs the player one star but the king is still freed
+        print("Incorrect. You lose a star.")
+        print("Even though you failed to answer the question, the Green Joker somehow sets the King of Hearts free.")
+        print("He is reunited with the rest of his suit, no thanks to you.") 
+        stars -= 1
+        print_health(stars)
+
+# this section is the start of the second door/question where the player picks between three portals 
+print("You are sent on your way, and end up in a cave-like room. There are three portals to pick from. [1] Red [2] Orange [3] Green")
+
+user_input6 = "" 
+while True:  #makes sure the player only types a number in 
+        try:
+            user_input6 = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+if user_input6 == 1: # user chose red
+    print("As you enter the red portal the Orange Joker appears and says, “Welcome! In order to proceed and unlock this door you must solve this riddle.")
+    print("What has hearts but not an organ? [1] A deck of cards or [2] the Green Joker)")
+    user_input10 = "" 
+    while True:  #makes sure the player only types a number in 
+        try:
+            user_input10 = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    # this section takes away a star if the user answers the riddle incorrectly 
+    if user_input10 == 1:
+        print("Congratulations! You have saved the Seven of Spades!")
+    elif user_input10 == 2:
+        print("Booooooo! You have failed to save the Seven of Spades! You lose a star.")
+        stars -= 1
+        print_health(stars)
+        print("Luckily for you, the Six of Spades was able to free the Seven of Spades.")
+
+#this section
+elif user_input6 == 2: #user chose orange and loses three stars
+    print("Uh Oh! Bad choice! the Orange Joker bombards you with glitter and you have a coughing fit trying to clear the glitter from your lungs")
+    stars -= 3
+    print_health(stars)
+    print("You do not save anyone, and have to face the Suit of Spades knowing you could not save their missing suit members.")
+# this section
+elif user_input6 ==3: #user chose green and is automatically awarded a star
+    stars += 1
+    print_health(stars)
+    print("Yay you picked green! You gain a star if you lost one earlier.")
+    print("As you enter the green portal, the Orange Joker appears and says, “Riddle me this, what have I got in my pocket?")
+    print("[1] The One Ring or [2] Chocolate")
+    user_input10 = "" 
+    while True:  #makes sure the player only types a number in 
+        try:
+            user_input10 = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    # this section checks the user's answer to the riddle and if they fail they lose all their stars
+    if user_input10 == 1:
+        print("Congratulations! You have saved the Ace of Spades!")
+    elif user_input10 == 2:
+        print("Booooooo! You have failed to save the Ace of Spades! You lose all your stars.")
+        stars -= 5
+        print_health(stars)
+
+# The section is the last door, after finishing this door end game credits will happen
+print("You are then handed a spade by the Spades, and get sent digging.\nYou dig for what feels a fortnight, and eventually break into a diamond cave under the ground.")
+print("There are two pathways. Do you wish to go [1] left or [2] right?")
+
+user_input11 = "" 
+while True:  #makes sure the player only types a number in 
+    try:
+        user_input11 = int(input())
+        break
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+if user_input11 == 1: # user chose left
+    print("The Three of Diamonds is suspended in mid-air. To get her down, you must answer the Orange Joker's question.")
+    print("The Orange Joker pops up and asks 'Who is the red capped Italian man who jumps for mushrooms?'")
+    print("[1] Mario [2] Luigi")
+    user_input = "" 
+    while True:  #makes sure the player only types a number in 
+        try:
+            user_input = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    # this section checks the user's answer and changes stars depending if if they are correct or not 
+    if user_input == 1:
+        print("Correct! You have saved the Three of Diamonds! You gain one star!")
+        stars += 1
+        print_health(stars)
+    elif user_input == 2:
+        print("You didn't save the Three of Diamonds. You lose all five stars.")
+        stars -= 5
+        print_health(stars)
+
+elif user_input11 == 2: #user chose right
+    print("The Orange Joker pops up and asks 'Who is the yellow electric mouse that is Ash Ketchum's first Pokémon?'")
+    print("[1] Pikachu [2] Charmander")
+
+user_input = "" 
+while True:  #makes sure the player only types a number in 
+    try:
+        user_input = int(input())
+        break
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+    # this section checks the user's answer and changes stars depending if if they are correct or not 
+if user_input == 1:
+    print("Correct! You have saved the Eight of Diamonds! They are thankful for your help, and reward you with two stars!")
+    stars += 2
+    print_health(stars)
+elif user_input == 2: 
+    print("You are unable to save the Eight of Diamonds. You lose two stars.")
+    stars -= 2
+    print_health(stars)
+
+# End of game here, shows stars 
+print("Congrats! You saved all of the suits. Luckily, the Clubs were completely unharmed. You are free to go. ")
+print("Here are your remaining stars:")
+print_health(stars)
