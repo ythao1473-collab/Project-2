@@ -24,6 +24,18 @@ def print_health(health: int): #defines a function named print_health with argum
         print("YOU FAILED, goodbye")
         sys.exit(0)
 
+# this function gives the user apples once they hit a certain amount of stars
+def apples() -> None:
+    global stars
+    try:    
+        if stars == 4:
+            ...
+        else: 
+            raise ValueException:
+    catch ValueException:
+        
+
+
 # asks for user's name and welcomes them 
 print("Enter your name:")
 name = input()
