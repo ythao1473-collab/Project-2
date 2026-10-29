@@ -8,7 +8,9 @@ little game abt a deck of cards :)
 
 """
 import sys
+import random
 stars = 5
+user_inventory = {}
 def print_health(health: int): #defines a function named print_health with arguments "health"  
     global stars # stars is a global variable, but global variables can't be accessed in a function the keyword global is used
     print("[",end="")
@@ -23,17 +25,54 @@ def print_health(health: int): #defines a function named print_health with argum
     if stars <= 0:
         print("YOU FAILED, goodbye")
         sys.exit(0)
-
+def swag_menu(swag) -> dict:
+    swag_dict = {
+                  "life":1,
+                  "knife":"bladed knife",
+                  "gold_coin": 0
+                }
+    num = random.randint(1,10)
+    if num in dict.keys():
+        num = random.randint(1,10)
+    match num:
+        case 1:
+            if "life" not in swag.keys():
+                swag["life"] = 1
+            else:
+                swag["life"] += 1
+        case 3:
+            try:
+                if "knife" not in swag.keys():
+                    swag["knife"] = swag_dict["knife"]
+                else:
+                    raise ValueError
+            except ValueError:
+                a = random.randint(0,10)
+                if a < num:
+                    swag["life"] +=1
+                else:
+                    swag["gold_coin"] += 1
+        case 7:
+            if "gold_coin" not in swag.keys():
+                swag["gold_coin"] = swag_dict["gold_coin"]
+            else:
+                swag["gold_coin"] +=1
+        case _:
+            print("Luck was not with you, you didn't earn anything that could be used in the game")
+            return swag
+    return swag
+            
 # this function gives the user apples once they hit a certain amount of stars
-def apples() -> None:
+def apples(input) -> None:
     global stars
     try:    
-        if stars == 4:
-            ...
+        if stars >= 3:
+            input = swag_menu(input)
         else: 
-            raise ValueException:
-    catch ValueException:
-        
+            raise ValueError
+    except ValueError: 
+        return input
+    return input
 
 
 # asks for user's name and welcomes them 
@@ -116,13 +155,19 @@ if user_input4 == 1:  # user chose yes and is introduced to the jokers
         print("You manage to answer the question and set the King of Hearts free. He is reunited with the rest of his suit.") 
         print("Hooray! Everyone thanks you and throws a banquet in your honor.")
         stars += 1
+        print("You have unlocked a secret opportunity for Inventory")
+        user_inventory = apples(user_inventory)
         print_health(stars)
 
     else: # an incorrect answer costs the player one star but the king is still freed
-        print("Incorrect. You lose a star.")
+        print("Incorrect. You lose a star. If you have any extra life in your inventory it will be deducted")
         print("Even though you failed to answer the question, the Green Joker somehow sets the King of Hearts free.")
         print("He is reunited with the rest of his suit, no thanks to you.") 
         stars -= 1
+        if "life" in user_inventory.keys():
+            if user_inventory["life"] > 1:
+                stars += 1
+                user_inventory["life"] -= 1
         print_health(stars)
 
 # if the player picks no they lose a star but are still forced to continue forward 
@@ -152,6 +197,8 @@ elif user_input4 == 2:
         print("Congrats! You passed!")
         print("You manage to answer the question and set the King of Hearts free. He is reunited with the rest of his suit.") 
         print("Hooray! Everyone thanks you and throws a banquet in your honor.")
+        print("You have earned chance, may luck be with you")
+        user_inventory = apples(user_inventory)
         stars += 1
         print_health(stars)
         
@@ -216,6 +263,8 @@ elif user_input6 ==3: #user chose green and is automatically awarded a star
     # this section checks the user's answer to the riddle and if they fail they lose all their stars
     if user_input10 == 1:
         print("Congratulations! You have saved the Ace of Spades!")
+        print("Luck is on your side, maybe it will help you")
+        user_inventory = apples(user_inventory)
     elif user_input10 == 2:
         print("Booooooo! You have failed to save the Ace of Spades! You lose all your stars.")
         stars -= 5
@@ -248,6 +297,7 @@ if user_input11 == 1: # user chose left
     if user_input == 1:
         print("Correct! You have saved the Three of Diamonds! You gain one star!")
         stars += 1
+        user_inventory = apples(user_inventory)
         print_health(stars)
     elif user_input == 2:
         print("You didn't save the Three of Diamonds. You lose all five stars.")
@@ -279,5 +329,6 @@ elif user_input == 2:
 print("Congrats! You saved all of the suits. Luckily, the Clubs were completely unharmed. You are free to go. ")
 print("Here are your remaining stars:")
 print_health(stars)
-
+if "gold_coins" in user_inventory.keys():
+    print(f"You also have some loot to boot, you have {user_inventory["gold_coins"]}")
 # hello
