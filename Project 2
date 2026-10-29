@@ -64,6 +64,7 @@ def swag_menu(swag) -> dict:
             
 # this function gives the user apples once they hit a certain amount of stars
 def apples(input) -> None:
+    
     global stars
     try:    
         if stars >= 3:
