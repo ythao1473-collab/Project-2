@@ -1,5 +1,5 @@
 """
-project_1.py
+project_2.py
 Shreya Nidta 
 Yupheng Ormonde-Thao
 Jeremy Burt
@@ -7,17 +7,26 @@ Jeremy Burt
 little game abt a deck of cards :)
 
 """
+# imports modules needed to end the game when the player runs out of stars and to randomly determine inventory rewards
 import sys
 import random
 stars = 5
 user_inventory = {}
-def print_health(health: int): #defines a function named print_health with arguments "health"  
+def print_health(health: int) -> None: #defines a function named print_health with arguments "health"  
+    """
+    displays the user's remaining stars  and ends the game if the player runs out of stars 
+
+    Parameters
+    ----------
+    health : int
+        the number of stars the player currently has 
+    """
     global stars # stars is a global variable, but global variables can't be accessed in a function the keyword global is used
     print("[",end="")
     # print stars for each life the player still has
     for y in range(health): 
         print(" ✮ ",end = "")
-    # Put spaces for the "lives" player has lost.
+    # Put spaces for the "lives" player has lost
     if (5 - health) > 0:
         for _ in range(5-health):
             print(" ",end = "")
@@ -26,54 +35,76 @@ def print_health(health: int): #defines a function named print_health with argum
         print("YOU FAILED, goodbye")
         sys.exit(0)
 def swag_menu(swag) -> dict:
+    """
+    Randomly selects a reward and adds it to the player's inventory.
+    Possible rewards include an extra life, knife, or gold coins.
+
+    Parameters
+    ----------
+    swag : dict
+        the player's current inventory
+
+    Returns
+    -------
+    dict
+        the updated player inventory 
+    """
+    # These are the possible items the player can collect
     swag_dict = {
                   "life":1,
                   "knife":"bladed knife",
                   "gold_coin": 0
                 }
     num = random.randint(1,10)
-    if num in dict.keys():
-        num = random.randint(1,10)
+    # Each case represents a possible reward based on the randomly selected number
     match num:
         case 1:
+        # Gives the player an extra life or increases their existing life count
             if "life" not in swag.keys():
                 swag["life"] = 1
             else:
                 swag["life"] += 1
         case 3:
-            try:
-                if "knife" not in swag.keys():
+            # Gives the player a knife if they do not already have one, if they already have a knife, they have another chance to receive a life or gold coin
+            if "knife" not in swag.keys():
                     swag["knife"] = swag_dict["knife"]
-                else:
-                    raise ValueError
-            except ValueError:
+            else:
                 a = random.randint(0,10)
                 if a < num:
-                    swag["life"] +=1
+                    swag["life"] = swag.get("life", 0) + 1
                 else:
-                    swag["gold_coin"] += 1
+                    swag["gold_coin"] = swag.get("gold_coin", 0) +1
         case 7:
+        # Adds a gold coin to the player's inventory
             if "gold_coin" not in swag.keys():
-                swag["gold_coin"] = swag_dict["gold_coin"]
+                swag["gold_coin"] = 1
             else:
                 swag["gold_coin"] +=1
         case _:
+        # If the random number does not match a reward, the player receives nothing
             print("Luck was not with you, you didn't earn anything that could be used in the game")
             return swag
     return swag
             
-# this function gives the user apples once they hit a certain amount of stars
-def apples(input) -> None:
-    
+# this function gives the user apples once they hit a certain amount of stars and checks whether the player's star count is high enough to qualify for a random inventory reward
+def apples(inventory: dict) -> dict:
+    """
+    Checks whether the player has enough stars to receive a random
+    inventory reward.
+
+    Returns
+    -------
+    dict
+        The player's inventory, updated if they receive a reward.
+    """
+    # Allows the function to check the player's current stars
     global stars
     try:    
         if stars >= 3:
-            input = swag_menu(input)
-        else: 
-            raise ValueError
-    except ValueError: 
-        return input
-    return input
+            inventory = swag_menu(inventory)
+    except TypeError: 
+        print("There was an error with accessing the player's inventory")
+    return inventory
 
 
 # asks for user's name and welcomes them 
@@ -96,7 +127,7 @@ while True:
     elif user_input1 == 2:
         print("Try again.")
 
-# this section explains what happens and tells the user about the 'lives' they have and what happens when they run out.
+# this section explains what happens and tells the user about the 'lives' they have and what happens when they run out
 print("· · ─ ·✶· ─ · · Congratulations! You’ve entered the realm of the deck of cards. · · ─ ·✶· ─ · ·")
 print("It’s been a chaotic past few years, the suits are missing some of their members.")
 print("You start with 5 stars, and you can lose some and gain some. Watch out, if you lose all five you fail.")
@@ -165,6 +196,7 @@ if user_input4 == 1:  # user chose yes and is introduced to the jokers
         print("Even though you failed to answer the question, the Green Joker somehow sets the King of Hearts free.")
         print("He is reunited with the rest of his suit, no thanks to you.") 
         stars -= 1
+        # Checks whether the player has extra lives in their inventory that can prevent a star loss
         if "life" in user_inventory.keys():
             if user_inventory["life"] > 1:
                 stars += 1
@@ -240,14 +272,14 @@ if user_input6 == 1: # user chose red
         print_health(stars)
         print("Luckily for you, the Six of Spades was able to free the Seven of Spades.")
 
-#this section
-elif user_input6 == 2: #user chose orange and loses three stars
+#user chose orange and loses three stars
+elif user_input6 == 2: 
     print("Uh Oh! Bad choice! the Orange Joker bombards you with glitter and you have a coughing fit trying to clear the glitter from your lungs")
     stars -= 3
     print_health(stars)
     print("You do not save anyone, and have to face the Suit of Spades knowing you could not save their missing suit members.")
-# this section
-elif user_input6 ==3: #user chose green and is automatically awarded a star
+#user chose green and is automatically awarded a star
+elif user_input6 ==3: 
     stars += 1
     print_health(stars)
     print("Yay you picked green! You gain a star if you lost one earlier.")
@@ -309,27 +341,26 @@ elif user_input11 == 2: #user chose right
     print("The Orange Joker pops up and asks 'Who is the yellow electric mouse that is Ash Ketchum's first Pokémon?'")
     print("[1] Pikachu [2] Charmander")
 
-user_input = "" 
-while True:  #makes sure the player only types a number in 
-    try:
-        user_input = int(input())
-        break
-    except ValueError:
-        print("Invalid input. Please enter a number.")
+    user_input = "" 
+    while True:  #makes sure the player only types a number in 
+        try:
+            user_input = int(input())
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
     # this section checks the user's answer and changes stars depending if if they are correct or not 
-if user_input == 1:
-    print("Correct! You have saved the Eight of Diamonds! They are thankful for your help, and reward you with two stars!")
-    stars += 2
-    print_health(stars)
-elif user_input == 2: 
-    print("You are unable to save the Eight of Diamonds. You lose two stars.")
-    stars -= 2
-    print_health(stars)
+    if user_input == 1:
+        print("Correct! You have saved the Eight of Diamonds! They are thankful for your help, and reward you with two stars!")
+        stars += 2
+        print_health(stars)
+    elif user_input == 2: 
+        print("You are unable to save the Eight of Diamonds. You lose two stars.")
+        stars -= 2
+        print_health(stars)
 
 # End of game here, shows stars 
 print("Congrats! You saved all of the suits. Luckily, the Clubs were completely unharmed. You are free to go. ")
 print("Here are your remaining stars:")
 print_health(stars)
-if "gold_coins" in user_inventory.keys():
-    print(f"You also have some loot to boot, you have {user_inventory["gold_coins"]}")
-# hello
+if "gold_coin" in user_inventory.keys():
+    print(f"You also have some loot to boot, you have {user_inventory["gold_coin"]}")
