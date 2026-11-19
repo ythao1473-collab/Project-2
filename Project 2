@@ -7,6 +7,7 @@ Jeremy Burt
 little game abt a deck of cards :)
 
 """
+
 # imports modules needed to end the game when the player runs out of stars and to randomly determine inventory rewards
 import sys
 import random
@@ -34,7 +35,7 @@ def print_health(health: int) -> None: #defines a function named print_health wi
     if stars <= 0:
         print("YOU FAILED, goodbye")
         sys.exit(0)
-def swag_menu(swag) -> dict:
+def swag_menu(swag: dict) -> dict:
     """
     Randomly selects a reward and adds it to the player's inventory.
     Possible rewards include an extra life, knife, or gold coins.
@@ -87,7 +88,7 @@ def swag_menu(swag) -> dict:
     return swag
             
 # this function gives the user apples once they hit a certain amount of stars and checks whether the player's star count is high enough to qualify for a random inventory reward
-def apples(inventory: dict) -> dict:
+def apples(inventory: dict[str, int | str]) -> dict[str, int | str]:
     """
     Checks whether the player has enough stars to receive a random
     inventory reward.
